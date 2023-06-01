@@ -2,16 +2,16 @@
 
 namespace models;
 
-class Veiculo extends Model {
+class Projeto extends Model {
     
-    protected $table = "veiculos";
+    protected $table = "projetos";
     #nao esqueça da ID
-    protected $fields = ["id","placa","modelo_id","cor","ano"];
+    protected $fields = ["id","titulo","descricao","categoria","sub_categ", "usuario_id", "orient_id"];
 
     public function findById($id){
-        $sql = "SELECT veiculos.*, modelos.modelo AS modelo FROM {$this->table} "
-                ." LEFT JOIN modelos ON modelos.id = veiculos.modelo_id "
-                ." WHERE veiculos.id = :id";
+        $sql = "SELECT projetos.*, usuarios.nome AS nome FROM {$this->table} "
+                ." LEFT JOIN usuarios ON usuarios.id = projetos.usuario_id "
+                ." WHERE projetos.id = :id";
         $stmt = $this->pdo->prepare($sql);
         $data = [':id' => $id];
         $stmt->execute($data);
@@ -22,8 +22,8 @@ class Veiculo extends Model {
     }
 
     public function all(){
-        $sql = "SELECT veiculos.*, modelos.modelo as modelo FROM {$this->table} "
-                ." LEFT JOIN modelos ON modelos.id = veiculos.modelo_id ";
+        $sql = "SELECT projetos.*, usuarios.nome as nome FROM {$this->table} "
+                ." LEFT JOIN usuarios ON usuarios.id = projetos.usuario_id ";
         
         $stmt = $this->pdo->prepare($sql);
         if ($stmt == false){
@@ -41,17 +41,17 @@ class Veiculo extends Model {
     }
 
 
-    public function getMotoristas($idVeiculo){
-        $sql = "SELECT * FROM usuarios
-            INNER JOIN motoristas ON
-                usuarios.id = motoristas.usuario_id
-            WHERE motoristas.veiculo_id = :idVeiculo ";
+    public function getMidia($idMidia){
+        $sql = "SELECT * FROM midia
+            INNER JOIN projetos ON
+                usuarios.id = projetos.usuario_id
+            WHERE projetos.usuario_id = :idMidia ";
 
         $stmt = $this->pdo->prepare($sql);
         if ($stmt == false){
             $this->showError($sql);
         }
-        $stmt->execute([':idVeiculo' => $idVeiculo]);
+        $stmt->execute([':idMidia' => $idMidia]);
 
         $list = [];
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {

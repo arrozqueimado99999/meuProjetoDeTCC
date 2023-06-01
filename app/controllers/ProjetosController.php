@@ -1,5 +1,6 @@
 <?php
-use models\Usuario;
+
+use models\Projeto;
 
 /**
 * Tutorial CRUD
@@ -9,7 +10,7 @@ use models\Usuario;
 #A classe devera sempre iniciar com letra maiuscula
 #terá sempre o mesmo nome do arquivo
 #e precisa terminar com a palavra Controller
-class UsuariosController {
+class ProjetosController {
 
 	/**
 	* Para acessar http://localhost/NOMEDOPROJETO/usuarios/index
@@ -20,7 +21,7 @@ class UsuariosController {
 		$send = [];
 
 		#cria o model
-		$model = new Usuario();
+		$model = new Projeto();
 		
 		
 		$send['data'] = null;
@@ -33,16 +34,14 @@ class UsuariosController {
 		#busca todos os registros
 		$send['lista'] = $model->all();
 
-		$send['tipos'] = [0=>"Escolha uma opção", 1=>"Usuário comum", 2=>"Admin"];
-
 		#chama a view
-		render("usuarios", $send);
+		render("projetos", $send);
 	}
 
 	
 	function salvar($id=null){
 
-		$model = new Usuario();
+		$model = new Projeto();
 		
 		if ($id == null){
 			$id = $model->save($_POST);
@@ -50,15 +49,15 @@ class UsuariosController {
 			$id = $model->update($id, $_POST);
 		}
 		
-		redirect("usuarios/index/$id");
+		redirect("projetos/index/$id");
 	}
 
 	function deletar(int $id){
 		
-		$model = new Usuario();
+		$model = new Projeto();
 		$model->delete($id);
 
-		redirect("usuarios/index/");
+		redirect("projetos/index/");
 	}
 
 

@@ -6,3 +6,31 @@ body{
 label {
     display:block;
 }
+
+:root{
+    --yellow: #FFCF60;
+    --green: #2C5948;
+    --dark-yellow: #594923;
+    --purple: #8D38A6;
+    --dark-purple: #4B1A59;
+}
+
+.yellow{
+    background: var(--yellow);
+}
+
+.purple{
+    background: var(--purple);
+}
+
+.green{
+    background: var(--green);
+}
+
+.dark{
+    background: #141414;
+}
+
+.light{
+    background: #fafafa;
+}
